@@ -9,5 +9,6 @@ class App extends React.Component {
     );
   }
 }
+console.disableYellowBox=true;
 
 export default  App;
