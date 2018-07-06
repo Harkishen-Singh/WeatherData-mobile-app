@@ -8,7 +8,9 @@ export default class LoginScreenFirst extends React.Component {
         this.state = {
             username:'',
             pass:'',
+            loginMainCheck: true,
         };
+        this.loginOperations = this.loginOperations.bind(this);
     }
     render(){
         const {nagivate} = this.props.navigation
@@ -47,11 +49,26 @@ export default class LoginScreenFirst extends React.Component {
          </KeyboardAvoidingView>
          );
     }
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginMainCheck: true,
-        };
+    loginOperations() {
+        let user = this.state.username, pass=this.state.pass;
+        fetch('http://192.168.225.44:5000/loginOperations', {
+            method:'POST',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                'username':user,
+                'password':pass,
+            }),
+        })
+        .then(resData => resData.json())
+        .then(res => {
+            console.warn('Received as '+res);
+        })
+        .catch(err => {
+            alert('Error while connecting with Node server');
+        });
     }
 }
 
