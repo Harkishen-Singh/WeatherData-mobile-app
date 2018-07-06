@@ -3,6 +3,13 @@ import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput,
 import Display from 'react-native-display';
 
 export default class LoginScreenFirst extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username:'',
+            pass:'',
+        };
+    }
     render(){
         const {nagivate} = this.props.navigation
     return (
@@ -20,7 +27,7 @@ export default class LoginScreenFirst extends React.Component {
                         autoCorrect={false}
                         secureTextEntry={false}
                         style={styles.textDefaultInput}
-                        
+                        onChangeText={username => this.setState(username)}
                     />
                     <TextInput
                         placeholder='Password'
@@ -29,6 +36,7 @@ export default class LoginScreenFirst extends React.Component {
                         autoCorrect={false}
                         secureTextEntry={true}
                         style={styles.textDefaultInput}
+                        onChangeText={pass => this.setState(pass)}
                     />
                     <TouchableHighlight style={styles.specButtons}>
                         <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Login</Text>
