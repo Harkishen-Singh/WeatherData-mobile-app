@@ -9,6 +9,9 @@ export default class LoginScreenFirst extends React.Component {
             username:'',
             pass:'',
             loginMainCheck: true,
+            showMessageCheck:false,
+            showMessage:'',
+            loginSuccess:false,
         };
         this.loginOperations = this.loginOperations.bind(this);
     }
@@ -17,6 +20,10 @@ export default class LoginScreenFirst extends React.Component {
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <View style={styles.appBackground}>
+                <Display enable={this.state.showMessageCheck} >
+                    <Text style={styles.messages}>{this.state.showMessage}</Text>
+                </Display>
+
                 <Display 
                     enable={this.state.loginMainCheck}
                     >
@@ -29,7 +36,7 @@ export default class LoginScreenFirst extends React.Component {
                         autoCorrect={false}
                         secureTextEntry={false}
                         style={styles.textDefaultInput}
-                        onChangeText={username => this.setState(username)}
+                        onChangeText={username => this.setState({username})}
                     />
                     <TextInput
                         placeholder='Password'
@@ -38,12 +45,18 @@ export default class LoginScreenFirst extends React.Component {
                         autoCorrect={false}
                         secureTextEntry={true}
                         style={styles.textDefaultInput}
-                        onChangeText={pass => this.setState(pass)}
+                        onChangeText={pass => this.setState({pass})}
                     />
-                    <TouchableHighlight style={styles.specButtons}>
-                        <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Login</Text>
-                    </TouchableHighlight>
-
+                    <Display enable={!this.state.loginSuccess} >
+                        <TouchableHighlight style={styles.specButtons} onPress={this.loginOperations}>
+                            <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Login</Text>
+                        </TouchableHighlight>
+                    </Display>
+                    <Display enable={this.state.loginSuccess} >
+                        <TouchableHighlight style={styles.specButtons} >
+                            <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Next</Text>
+                        </TouchableHighlight>
+                    </Display>
                 </Display>
          </View>
          </KeyboardAvoidingView>
@@ -51,7 +64,12 @@ export default class LoginScreenFirst extends React.Component {
     }
     loginOperations() {
         let user = this.state.username, pass=this.state.pass;
-        fetch('http://192.168.225.44:5000/loginOperations', {
+        if(user.length==0 || pass.length==0){
+            this.setState({showMessage:'Please fill both the fields.', showMessageCheck:true});
+        }
+        else{
+            this.setState({showMessageCheck:false});
+        fetch('http://192.168.43.51:5000/loginOperations', {
             method:'POST',
             headers: {
                 'Accept':'application/json',
@@ -65,10 +83,16 @@ export default class LoginScreenFirst extends React.Component {
         .then(resData => resData.json())
         .then(res => {
             console.warn('Received as '+res);
+            this.setState({showMessage:'Succesfully Logged In. Welcome '+res['first_name']+' '+res['second_name'],
+                showMessageCheck:true, loginSuccess:true
+                });
         })
         .catch(err => {
-            alert('Error while connecting with Node server');
+            this.setState({showMessage:'Logged In Unsuccessful',
+            showMessageCheck:true, loginSuccess:false
+            });
         });
+        }
     }
 }
 
@@ -117,5 +141,15 @@ var styles = StyleSheet.create({
         borderRadius:4,
         alignSelf:'center',
         height:40,
+    },
+    messages:{
+        color:'white',
+        textAlign:'center',
+        backgroundColor:'green',
+        borderRadius:6,
+        width:300,
+        height:40,
+        marginBottom:10,
+        marginTop:10,
     }
 });
