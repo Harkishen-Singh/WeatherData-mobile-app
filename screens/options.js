@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight, ListView } from 'react-native';
 import Display from 'react-native-display';
 import {styles} from './loginScreen';
 
@@ -11,7 +11,7 @@ export default class Options extends React.Component {
         const {navigate} = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container}>
-                <TouchableHighlight  style={selfStyles.button}>
+                <TouchableHighlight  style={selfStyles.button} onPress={() => {this.props.navigation.navigate('Website');}} >
                     <Text style={[styles.textDefault, {fontSize:15,paddingTop:7}]} >Website Messages</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={selfStyles.button} >
@@ -29,6 +29,8 @@ export default class Options extends React.Component {
 
     }
 }
+
+ 
 
 const selfStyles = StyleSheet.create({
     button:{

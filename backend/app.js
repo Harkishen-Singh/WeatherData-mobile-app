@@ -23,8 +23,10 @@ app.get('/', (req,res) => {
 app.post('/loginOperations', (req, res) => {
     DB.loginOpt(req,res);
 });
-
-const server = app.listen(5000, '0.0.0.0', e =>{
+app.post('/fetchClientMessages', (req, res) => {
+    DB.messages(req,res);
+});
+const server = app.listen(5500, '0.0.0.0', e =>{
     if(e) throw e;
     console.warn('URL : '+server.address().address+'\t PORT : '+server.address().port);
 

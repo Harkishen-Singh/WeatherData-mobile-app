@@ -16,13 +16,29 @@ function loginOperations(req, res) {
                 else    
                     res.send('incorrect passward')
             });
+            client.close();
         }
         catch(e){
             console.error('Wrong input, admin form');
         }
+
+    });
+}
+
+function fetchMessagesWebsite(req, res) {
+    MongoClient.connect(url, (e, client) => {
+        if(e) throw e;
+        coll = client.db('weatherdata').collection('Client_Message');
+        retrive = coll.find({}).toArray((e, result) => {
+            if(e) console.error('err while retriving');
+            console.debug(result);
+            res.send(result);
+            client.close();
+        });
     });
 }
 
 module.exports = {
     loginOpt:loginOperations,
+    messages: fetchMessagesWebsite,
 }
