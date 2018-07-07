@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput,
 import Display from 'react-native-display';
 import {styles} from './loginScreen';
 
-export default class Options extends React.Component {
+export class Options extends React.Component {
     constructor(props){
         super(props);
     }
@@ -29,6 +29,8 @@ export default class Options extends React.Component {
 
     }
 }
+
+
 
  
 

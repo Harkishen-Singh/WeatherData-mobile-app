@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import {LoginScreenFirst} from './screens/loginScreen';
 import Welcome from './screens/welcome';
-import Options from './screens/options';
-import Website from './screens/website_messages';
+import {Options} from './screens/options';
+import {Website, PastWeather} from './screens/website_messages';
 
 const AppStack = createStackNavigator({
     LoginScreenFirst: {
@@ -32,6 +32,13 @@ const AppStack = createStackNavigator({
         navigationOptions:{
             header:null,
             title:'Client_Messages'
+        }
+    },
+    PastWeather: {
+        screen:PastWeather,
+        navigationOptions:{
+            title:'VIewing past weather data from database',
+            header:null
         }
     },
 },

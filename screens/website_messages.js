@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight, ListView } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight, ListView, ScrollView } from 'react-native';
 import Display from 'react-native-display';
 import {styles} from './loginScreen';
 
-export default class Website extends React.Component {
+export  class Website extends React.Component {
     constructor(props) {
         super(props);
         const ds= new ListView.DataSource({rowHasChanged:(r1, r2) => r1 !== r2});
@@ -17,22 +17,26 @@ export default class Website extends React.Component {
         return (
             <KeyboardAvoidingView style={styles.container}>
             <View style={styles.appBackground} >
-                <Text style={[styles.textDefault, {color:'#fff', fontWeight:'bold', textAlign:'center'}]}>Client Messages</Text>
+                <Text style={[styles.textDefault, {color:'#fff', fontWeight:'bold', textAlign:'center', marginTop:20}]}>Client Messages</Text>
             </View>
+            <ScrollView>
             <ListView
                 dataSource={this.state.datasource}
                 renderRow={ data => 
                     <View style={{flexDirection:'column'}} >
-                        <Text>IP : {data.ip} </Text>
-                        <Text>Name : {data.name} </Text>
-                        <Text>Time :{ data.time} </Text>
-                        <Text>Work Type : {data.work_type} </Text>
-                        <Text>Phone : {data.phone} </Text>
-                        <Text>Message : {data.message} </Text>
-                        <Text>Email : {data.email}  </Text>
+
+                        <Text style={{color:'#fff', fontWeight:'bold'}} >Phone : {data.phone} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>IP : {data.ip} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>Name : {data.name} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>Time :{ data.time} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>Work Type : {data.work_type} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>Message : {data.message} </Text>
+                        <Text style={{color:'#fff', fontWeight:'bold'}}>Email : {data.email} </Text>
+                        <Text>{'\n'} </Text>
                     </View>
                  }
                 />
+            </ScrollView>
             </KeyboardAvoidingView>
         );
     }
@@ -54,6 +58,31 @@ export default class Website extends React.Component {
     }
 
 }
+
+export class PastWeather extends React.Component {
+    constructor(props){
+        super(props);
+
+    }
+    render(){
+        return (
+            <View></View>
+        );
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const selfStyles = StyleSheet.create({
     button:{
