@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import LoginScreenFirst from './screens/loginScreen';
+import {LoginScreenFirst} from './screens/loginScreen';
 import Welcome from './screens/welcome';
+import Options from './screens/options';
 
 const AppStack = createStackNavigator({
     LoginScreenFirst: {
@@ -18,6 +19,13 @@ const AppStack = createStackNavigator({
             title:'Welcome'
         }
     },
+    Options : {
+        screen: Options,
+        navigationOptions:{
+            header:null,
+            title:'Tasks'
+        }
+    }
 },
 {
     initialRouteName:'Welcome'

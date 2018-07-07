@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight } from 'react-native';
 import Display from 'react-native-display';
 
-export default class LoginScreenFirst extends React.Component {
+export class LoginScreenFirst extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +16,7 @@ export default class LoginScreenFirst extends React.Component {
         this.loginOperations = this.loginOperations.bind(this);
     }
     render(){
-        const {nagivate} = this.props.navigation
+        const {navigate} = this.props.navigation
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <View style={styles.appBackground}>
@@ -52,8 +52,8 @@ export default class LoginScreenFirst extends React.Component {
                             <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Login</Text>
                         </TouchableHighlight>
                     </Display>
-                    <Display enable={this.state.loginSuccess} >
-                        <TouchableHighlight style={styles.specButtons} >
+                    <Display enable={this.state.loginSuccess}  >
+                        <TouchableHighlight style={styles.specButtons} onPress={()=>{this.props.navigation.navigate('Options')}} >
                             <Text style={[styles.textDefault, {fontSize:15, textAlign:'center',paddingTop:7}]}>Next</Text>
                         </TouchableHighlight>
                     </Display>
@@ -62,6 +62,10 @@ export default class LoginScreenFirst extends React.Component {
          </KeyboardAvoidingView>
          );
     }
+    nextScreen = () => {
+        
+    }
+
     loginOperations() {
         let user = this.state.username, pass=this.state.pass;
         if(user.length==0 || pass.length==0){
@@ -97,7 +101,7 @@ export default class LoginScreenFirst extends React.Component {
 }
 
 
-var styles = StyleSheet.create({
+export var styles = StyleSheet.create({
 
     appBackground: {
         backgroundColor: 'red',

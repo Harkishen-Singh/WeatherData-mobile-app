@@ -6,6 +6,7 @@ export default class Welcome extends React.Component {
     
     render() {
         const {navigate} = this.props.navigation;
+        console.warn('options called')
         return (
         <View style={styles.appBackground} >
             <Text style={styles.textDefault}>
