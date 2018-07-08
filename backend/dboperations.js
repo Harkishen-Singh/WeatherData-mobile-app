@@ -1,5 +1,6 @@
 const MongoClient=require('mongodb').MongoClient,
-    url='mongodb+srv://harkishen:Bbsr131@cluster0-3ynvj.mongodb.net/weatherdata?retryWrites=true';
+    url='mongodb+srv://harkishen:Bbsr131@cluster0-3ynvj.mongodb.net/weatherdata?retryWrites=true',
+    url2='mongodb+srv://harkishen:Bbsr131@cluster0-zmd3i.mongodb.net/Weather_record_tests?retryWrites=true';
 
 // login operations
 function loginOperations(req, res) {
@@ -39,7 +40,27 @@ function fetchMessagesWebsite(req, res) {
     });
 }
 
+function pastWeatherFetch(req,res) {
+    MongoClient.connect(url2, (e, client) => {
+        if(e) throw e;
+        let date = req.body.date, place=req.body.place;
+        date_string = String(date);
+        let year = date_string.substring(0,4), month = date_string.substring(5,7), day=date_string.substring(8,10);
+        console.warn(date)
+        searcher = 'rec__'+year+'_'+month+'_'+day;
+        console.warn(searcher);
+        coll=client.db('Weather_record_tests').collection(searcher);
+        retrive = coll.find({"city":place}).toArray((e, result2)=>{
+            if(e) {console.error('err while retriving past data ');throw e;}
+            console.debug(result2)
+            res.send(result2)
+            client.close();
+        }); 
+    });
+}
+
 module.exports = {
     loginOpt:loginOperations,
     messages: fetchMessagesWebsite,
+    pastFetch:pastWeatherFetch,
 }

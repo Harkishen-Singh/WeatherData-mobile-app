@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight } from 'react-native';
 import Display from 'react-native-display';
+import {createStore, combineReducers} from 'redux';
 
 export class LoginScreenFirst extends React.Component {
     constructor(props) {
@@ -99,6 +100,7 @@ export class LoginScreenFirst extends React.Component {
         }
     }
 }
+
 
 
 export var styles = StyleSheet.create({

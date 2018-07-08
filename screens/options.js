@@ -14,7 +14,7 @@ export class Options extends React.Component {
                 <TouchableHighlight  style={selfStyles.button} onPress={() => {this.props.navigation.navigate('Website');}} >
                     <Text style={[styles.textDefault, {fontSize:15,paddingTop:7}]} >Website Messages</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={selfStyles.button} >
+                <TouchableHighlight style={selfStyles.button} onPress={()=> {this.props.navigation.navigate('PastWeather');} } >
                     <Text style={[styles.textDefault, {fontSize:15,paddingTop:7}]} >Past Weather Data</Text>
                 </TouchableHighlight>
                 <TouchableHighlight  style={selfStyles.button}>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight, ListView, ScrollView } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet,KeyboardAvoidingView,TextInput, TouchableHighlight, ListView, ScrollView,Button } from 'react-native';
 import Display from 'react-native-display';
 import {styles} from './loginScreen';
+import DatePicker from 'react-native-datepicker';
 
 export  class Website extends React.Component {
     constructor(props) {
@@ -62,23 +63,84 @@ export  class Website extends React.Component {
 export class PastWeather extends React.Component {
     constructor(props){
         super(props);
+        const ds = new ListView.DataSource({rowHasChanged:(r1,r2) => r1!==r2});
+        this.state={
+            date:'',
+            place:'',
+            datasource: ds.cloneWithRows()
+        };
 
+        this.searchRecord=this.searchRecord.bind(this);
     }
+
+    searchRecord() {
+        fetch('http://192.168.43.51:5500/fetchPastWeather', {
+            headers:{
+                Accept:'application/json',
+                'Content-Type':'application/json'
+            },
+            method:'POST',
+            body: JSON.stringify({
+                'date':this.state.date,
+                'place':this.state.place
+            })
+        })
+        .then(resData=> resData.json())
+        .then(res => {
+            alert('Works');
+            console.warn(res);
+
+        })
+        .catch(err => {
+            alert('err occuered');
+            this.setState({ds:this.state.datasource.cloneWithRows(res)});
+        });
+    
+    }    
+
     render(){
+        
+
         return (
-            <View></View>
+            <View style={styles.container} >
+                <Text style={[styles.textDefault, {color:'white',marginTop:20}]} >Mining Past Weather</Text>
+                <ScrollView>
+                <TextInput
+                    placeholder='Enter Place'
+                    style={styles.textDefaultInput}
+                    onChangeText={ place => this.setState({place})}
+                    underlineColorAndroid='transparent'
+                    />
+                <DatePicker
+                    placeholder='Enter Date'
+                    mode='date'
+                    style={{marginTop:10}}
+                    onDateChange={(date)=>{this.setState({date});
+                                            console.warn(this.state.date);
+                                        }}
+                    />
+                <TouchableHighlight 
+                    onPress={this.searchRecord}
+                    style={{backgroundColor:'white',borderRadius:10,marginTop:10, height:40, width:150}}
+
+                >
+                    <Text style={{color:'#555',textAlign:'center',paddingTop:10}}>Search</Text>
+                </TouchableHighlight>
+                <ListView
+                    dataSource={this.state.datasource}
+                    renderRow={data =>
+                    <View>
+                        <Text >Place : {data.place} </Text>
+                    </View>
+                    }
+                />
+
+                </ScrollView>
+            </View>
+
         );
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
