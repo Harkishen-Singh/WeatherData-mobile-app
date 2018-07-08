@@ -67,13 +67,18 @@ export class PastWeather extends React.Component {
         this.state={
             date:'',
             place:'',
-            datasource: ds.cloneWithRows()
+            displayResult:false,
+            weatherEntry:true,
+            datasource: ds.cloneWithRows(['Something']),
+            showMessage:false,
+            message:'',
         };
 
         this.searchRecord=this.searchRecord.bind(this);
     }
 
     searchRecord() {
+        
         fetch('http://192.168.43.51:5500/fetchPastWeather', {
             headers:{
                 Accept:'application/json',
@@ -87,54 +92,104 @@ export class PastWeather extends React.Component {
         })
         .then(resData=> resData.json())
         .then(res => {
-            alert('Works');
             console.warn(res);
-
+            if(res.length==0){
+                this.setState({showMessage:true,message:'   Record Not Found   '})
+            }
+            else
+                this.setState({datasource:this.state.datasource.cloneWithRows(res), displayResult:true, weatherEntry:false, showMessage:false});
+            
         })
         .catch(err => {
-            alert('err occuered');
-            this.setState({ds:this.state.datasource.cloneWithRows(res)});
+            
+            this.setState({showMessage:true,message:'Record not Found.'})
         });
     
     }    
 
     render(){
-        
-
         return (
             <View style={styles.container} >
                 <Text style={[styles.textDefault, {color:'white',marginTop:20}]} >Mining Past Weather</Text>
-                <ScrollView>
+                <Display enable={this.state.showMessage}>
+                    <Text style={[styles.textDefault, {color:'white',marginTop:10, backgroundColor:'green', borderRadius:10 }]}> {this.state.message} </Text>
+                </Display>
+                <Display enable={this.state.weatherEntry} >
                 <TextInput
                     placeholder='Enter Place'
                     style={styles.textDefaultInput}
                     onChangeText={ place => this.setState({place})}
                     underlineColorAndroid='transparent'
                     />
+                <Display enable={()=>{
+                    if(this.state.date.length == 0)
+                        return false;
+                    else
+                        return true;
+
+                }}>
+                    <Text style={[styles.textDefault, {color:'white',marginTop:10, fontSize:15, textAlign:'center'}]}>Date : {this.state.date} </Text>
+                </Display>
                 <DatePicker
                     placeholder='Enter Date'
                     mode='date'
-                    style={{marginTop:10}}
+                    style={{marginTop:10, alignSelf:'center', textAlign:'center'}}
                     onDateChange={(date)=>{this.setState({date});
                                             console.warn(this.state.date);
                                         }}
                     />
+                    
                 <TouchableHighlight 
                     onPress={this.searchRecord}
-                    style={{backgroundColor:'white',borderRadius:10,marginTop:10, height:40, width:150}}
+                    style={{backgroundColor:'white',borderRadius:10,marginTop:30, height:40, width:150, alignSelf:'center'}}
 
                 >
                     <Text style={{color:'#555',textAlign:'center',paddingTop:10}}>Search</Text>
                 </TouchableHighlight>
+                </Display>
+                <ScrollView>
+                <Display
+                    enable={this.state.displayResult}
+                    >
+                <TouchableHighlight 
+                    onPress={()=>{ 
+                        this.setState({weatherEntry:true, displayResult:false}) 
+                                        
+                    }}
+                    style={{backgroundColor:'white',borderRadius:10,marginTop:10, height:40, width:150}}
+
+                >
+                    <Text style={{color:'#555',textAlign:'center',paddingTop:10, alignSelf:'center'}}>Another Search</Text>
+                </TouchableHighlight>
                 <ListView
                     dataSource={this.state.datasource}
-                    renderRow={data =>
-                    <View>
-                        <Text >Place : {data.place} </Text>
+                    renderRow={data2 =>
+                    <View style={{flexDirection:'column'}} >
+                        <Text style={{color:'white', marginLeft:10}}>Mongo ID : {data2._id}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Date : {data2.date}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Time at server storage ( NOW ) : {data2.time_now}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>City : {data2.city}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>State : {data2.state}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Place : {data2.place}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Feels Like : {data2.feels_like_that_moment}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Present Temperature : {data2.temperature_that_moment}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Average Temperature : {data2.avg_temperature}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Max Temperature : {data2.max_temperature}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Min Temperature : {data2.min_temperature}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Max Rain Probability : {data2.max_probability_rainfall}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Avg Rain Probability : {data2.avg_rainfall}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Min Rain Probability : {data2.min_probability_rainfall}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Visibility : {data2.visibility}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Humidity : {data2.humidity}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Dew Point : {data2.dew_point}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Hourly Forecast : {data2.hourly_forecast}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Rain array starting from now : {data2.rain_array_starting_from_time_now}</Text>
+                        <Text style={{color:'white', marginLeft:10}}>Temp Array starting from now : {data2.temp_array_starting_from_time_now}</Text>
+
                     </View>
                     }
                 />
-
+                </Display>
                 </ScrollView>
             </View>
 

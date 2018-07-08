@@ -29,7 +29,8 @@ app.post('/fetchClientMessages', (req, res) => {
 app.post('/fetchPastWeather', (req, res) =>{
     DB.pastFetch(req,res);
 });
-const server = app.listen(5500, '0.0.0.0', e =>{
+port = process.env.PORT || 5500;
+const server = app.listen(port, '0.0.0.0', e =>{
     if(e) throw e;
     console.warn('URL : '+server.address().address+'\t PORT : '+server.address().port);
 

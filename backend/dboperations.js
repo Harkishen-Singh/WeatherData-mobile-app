@@ -52,6 +52,8 @@ function pastWeatherFetch(req,res) {
         coll=client.db('Weather_record_tests').collection(searcher);
         retrive = coll.find({"city":place}).toArray((e, result2)=>{
             if(e) {console.error('err while retriving past data ');throw e;}
+            if(result2.length>=2)
+                result2.pop();
             console.debug(result2)
             res.send(result2)
             client.close();
