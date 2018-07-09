@@ -156,10 +156,10 @@ export class PastWeather extends React.Component {
                         this.setState({weatherEntry:true, displayResult:false}) 
                                         
                     }}
-                    style={{backgroundColor:'white',borderRadius:10,marginTop:10, height:40, width:150}}
+                    style={{backgroundColor:'white',borderRadius:10,marginTop:10, height:40, width:150, alignSelf:'center'}}
 
                 >
-                    <Text style={{color:'#555',textAlign:'center',paddingTop:10, alignSelf:'center'}}>Another Search</Text>
+                    <Text style={{color:'#555',textAlign:'center',paddingTop:10}}>Another Search</Text>
                 </TouchableHighlight>
                 <ListView
                     dataSource={this.state.datasource}

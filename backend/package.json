@@ -1,0 +1,28 @@
+{
+  "name": "backend_weatherdata_mobile_app",
+  "version": "1.0.0",
+  "description": "Backend support for weather data mobile app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harkishen-Singh/WeatherData-mobile-app.git"
+  },
+  "keywords": [
+    "past",
+    "weather"
+  ],
+  "author": "Harkishen Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Harkishen-Singh/WeatherData-mobile-app/issues"
+  },
+  "homepage": "https://github.com/Harkishen-Singh/WeatherData-mobile-app#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.1"
+  }
+}
