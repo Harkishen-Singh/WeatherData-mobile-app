@@ -1,3 +1,5 @@
+<h2>To Download the Android App, click <a href="https://exp-shell-app-assets.s3-us-west-1.amazonaws.com/android%2F%40harkishen%2Fweatherdata-1938c3b7-8399-11e8-a9ff-0a580a780219-signed.apk">here</a>
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
