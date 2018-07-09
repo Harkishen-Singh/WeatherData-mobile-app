@@ -13,10 +13,12 @@ function loginOperations(req, res) {
             let retrive = coll.findOne({"email":username}, (e, result) =>{
                 if(e) console.error('Wrong Input, Admin form')
                 console.debug(result);
-                if(result['password']==password)
-                    res.send(result);
-                else    
-                    res.send('incorrect passward')
+                if(result!=null){
+                    if(result['password']==password)
+                        res.send(result);
+                    else    
+                        res.send('incorrect passward')
+            }
             });
             client.close();
         }

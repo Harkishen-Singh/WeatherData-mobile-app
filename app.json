@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+   "name": "weatherdata",
+   "icon": "./download.png",
+   "version": "1.0.0",
+   "slug": "weatherdata",
+   "sdkVersion": "27.0.0",
+   "ios": {
+     "bundleIdentifier": "com.socialytics.weatherdata"
+   },
+   "android": {
+     "package": "com.socialytics.weatherdata"
+   }
   }
 }
