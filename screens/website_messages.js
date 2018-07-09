@@ -43,7 +43,7 @@ export  class Website extends React.Component {
     }
     componentWillMount(){
         console.debug('reached website');
-        fetch('http://192.168.43.51:5500/fetchClientMessages', {
+        fetch('https://weatherdatabackend.herokuapp.com/fetchClientMessages', {
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
@@ -79,7 +79,7 @@ export class PastWeather extends React.Component {
 
     searchRecord() {
         
-        fetch('http://192.168.43.51:5500/fetchPastWeather', {
+        fetch('https://weatherdatabackend.herokuapp.com/fetchPastWeather', {
             headers:{
                 Accept:'application/json',
                 'Content-Type':'application/json'

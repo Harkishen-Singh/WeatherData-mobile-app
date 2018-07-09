@@ -74,7 +74,7 @@ export class LoginScreenFirst extends React.Component {
         }
         else{
             this.setState({showMessageCheck:false});
-        fetch('http://192.168.43.51:5500/loginOperations', {
+        fetch('https://weatherdatabackend.herokuapp.com/loginOperations', {
             method:'POST',
             headers: {
                 'Accept':'application/json',
